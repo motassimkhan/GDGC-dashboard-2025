@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
 
 # Page config
 st.set_page_config(
@@ -101,32 +100,14 @@ try:
     st.markdown("### 🎁 Progress Toward Swag Goal")
     st.markdown(f"**{completed_all}/100 people** have completed all 20 skill badges!")
     
-    progress_to_goal = min((completed_all / 100) * 100, 100)
+    progress_to_goal = completed_all / 100
+    st.progress(progress_to_goal)
     
-    fig = go.Figure(go.Indicator(
-        mode = "gauge+number+delta",
-        value = completed_all,
-        domain = {'x': [0, 1], 'y': [0, 1]},
-        title = {'text': "People Completed (Goal: 100)"},
-        delta = {'reference': 100},
-        gauge = {
-            'axis': {'range': [None, 100]},
-            'bar': {'color': "#4285F4"},
-            'steps': [
-                {'range': [0, 50], 'color': "#FBBC04"},
-                {'range': [50, 75], 'color': "#34A853"},
-                {'range': [75, 100], 'color': "#0F9D58"}
-            ],
-            'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                'value': 100
-            }
-        }
-    ))
-    
-    fig.update_layout(height=300)
-    st.plotly_chart(fig, use_container_width=True)
+    progress_col1, progress_col2 = st.columns(2)
+    with progress_col1:
+        st.metric("Completed", completed_all, delta=None)
+    with progress_col2:
+        st.metric("Remaining", 100 - completed_all, delta=None)
     
     if completed_all >= 100:
         st.balloons()
