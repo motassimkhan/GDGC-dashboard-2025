@@ -97,7 +97,7 @@ try:
     with col3:
         st.metric("Average Badges Completed", f"{avg_badges:.1f}")
     with col4:
-        st.metric("Number of People Redeemed Credits", f"{credits_redeemed}/100")
+        st.metric("Number of People Redeemed Credits", f"{credits_redeemed}/197")
     
     # Progress toward 100-person goal
     st.markdown("### 🎁 Progress Toward Swag Goal")
