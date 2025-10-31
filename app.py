@@ -69,7 +69,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('progress.csv')
+    df = pd.read_csv('progress1.csv')
     return df
 
 try:
@@ -163,7 +163,7 @@ try:
     
     # Filters above the table (horizontal)
     st.markdown("### 🔍 Filters")
-    filter_col1, filter_col2, filter_col3 = st.columns(3)
+    filter_col1, filter_col2, filter_col3, filter_col4 = st.columns(4)
     
     with filter_col1:
         search_name = st.text_input("Search by Name", "")
@@ -177,6 +177,9 @@ try:
     with filter_col3:
         top_n = st.slider("Show Top N Participants", 5, len(df), 10)
     
+    with filter_col4:
+        redemption = st.selectbox("Filter by access code redemption status", ["Yes", "No"])
+    
     # Apply filters
     filtered_df = df.copy()
     
@@ -187,7 +190,10 @@ try:
         filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] == 20]
     elif completion_filter == "In Progress":
         filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] < 20]
-    
+    if redemption == "Yes":
+        filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "Yes"]
+    elif redemption == "No":
+        filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "No"]
     # Sort by badges completed and arcade games
     filtered_df = filtered_df.sort_values(
         by=['# of Skill Badges Completed', '# of Arcade Games Completed'],
@@ -256,7 +262,8 @@ try:
                         st.markdown(f"- {game.strip()}")
                 else:
                     st.markdown("*No games completed yet*")
-                
+                st.markdown("**Redeemed Access Code Credits:**")
+                st.markdown(row["Access Code Redemption Status"])
                 if st.button("Close", key=f"close_{idx}"):
                     st.session_state[f'show_modal_{idx}'] = False
                     st.rerun()
