@@ -84,8 +84,9 @@ try:
     total_participants = len(df)
     completed_all = len(df[df['# of Skill Badges Completed'] == 20])
     avg_badges = df['# of Skill Badges Completed'].mean()
+    credits_redeemed = (df["Access Code Redemption Status"]=="Yes").sum()
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     
     with col1:
         st.metric("Total Participants", total_participants)
@@ -95,6 +96,8 @@ try:
     
     with col3:
         st.metric("Average Badges Completed", f"{avg_badges:.1f}")
+    with col4:
+        st.metric("Number of People Redeemed Credits", f"{credits_redeemed}/100")
     
     # Progress toward 100-person goal
     st.markdown("### 🎁 Progress Toward Swag Goal")
