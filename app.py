@@ -178,7 +178,7 @@ try:
         top_n = st.slider("Show Top N Participants", 5, len(df), 10)
     
     with filter_col4:
-        redemption = st.selectbox("Filter by access code redemption status", ["Yes", "No"])
+        redemption = st.selectbox("Filter by access code redemption status", ["none","Yes", "No"])
     
     # Apply filters
     filtered_df = df.copy()
@@ -190,7 +190,9 @@ try:
         filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] == 20]
     elif completion_filter == "In Progress":
         filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] < 20]
-    if redemption == "Yes":
+    if redemption == "none":
+        filtered_df = filtered_df
+    elif redemption == "Yes":
         filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "Yes"]
     elif redemption == "No":
         filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "No"]
