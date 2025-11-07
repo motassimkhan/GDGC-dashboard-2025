@@ -69,7 +69,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('progress6.csv')
+    df = pd.read_csv('progress7.csv')
     return df
 
 try:
@@ -82,7 +82,7 @@ try:
     st.markdown("## 📈 Study Jam Statistics")
     
     total_participants = len(df)
-    completed_all = len(df[df['# of Skill Badges Completed'] == 20])
+    completed_all = len(df[df['All Skill Badges & Games Completed'] == "Yes"])
     avg_badges = df['# of Skill Badges Completed'].mean()
     credits_redeemed = (df["Access Code Redemption Status"]=="Yes").sum()
     
@@ -92,7 +92,7 @@ try:
         st.metric("Total Participants", total_participants)
     
     with col2:
-        st.metric("Completed All Badges", completed_all)
+        st.metric("Completed Game & All Badges ", completed_all)
     
     with col3:
         st.metric("Average Badges Completed", f"{avg_badges:.1f}")
@@ -101,7 +101,7 @@ try:
     
     # Progress toward 100-person goal
     st.markdown("### 🎁 Progress Toward Swag Goal")
-    st.markdown(f"**{completed_all}/100 people** have completed all 20 skill badges!")
+    st.markdown(f"**{completed_all}/70 people** have completed all 19 skill badges and arcade game to get rewards!")
     
     progress_to_goal = completed_all / 100
     st.progress(progress_to_goal)
@@ -112,7 +112,7 @@ try:
     with progress_col2:
         st.metric("Remaining", 100 - completed_all, delta=None)
     
-    if completed_all >= 100:
+    if completed_all >= 50:
         st.balloons()
         st.success("🎉 Goal achieved! Everyone gets swags! 🎁")
     else:
@@ -139,7 +139,7 @@ try:
             st.markdown("### 🥈 2nd Place")
             second = top3_df.iloc[1]
             st.metric("Name", second['User Name'])
-            st.metric("Badges", f"{second['# of Skill Badges Completed']}/20")
+            st.metric("Badges", f"{second['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{second['# of Arcade Games Completed']}/2")
         
         # 1st Place (Center)
@@ -147,7 +147,7 @@ try:
             st.markdown("### 🥇 1st Place")
             first = top3_df.iloc[0]
             st.metric("Name", first['User Name'])
-            st.metric("Badges", f"{first['# of Skill Badges Completed']}/20")
+            st.metric("Badges", f"{first['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{first['# of Arcade Games Completed']}/2")
         
         # 3rd Place (Right)
@@ -156,7 +156,7 @@ try:
             st.markdown("### 🥉 3rd Place")
             third = top3_df.iloc[2]
             st.metric("Name", third['User Name'])
-            st.metric("Badges", f"{third['# of Skill Badges Completed']}/20")
+            st.metric("Badges", f"{third['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{third['# of Arcade Games Completed']}/2")
     
     st.markdown("---")
@@ -187,9 +187,9 @@ try:
         filtered_df = filtered_df[filtered_df['User Name'].str.contains(search_name, case=False, na=False)]
     
     if completion_filter == "Completed All Badges":
-        filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] == 20]
+        filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] == 19]
     elif completion_filter == "In Progress":
-        filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] < 20]
+        filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] < 19]
     if redemption == "none":
         filtered_df = filtered_df
     elif redemption == "Yes":
@@ -220,7 +220,7 @@ try:
         
         with col3:
             badges_completed = row['# of Skill Badges Completed']
-            progress_pct = (badges_completed / 20) * 100
+            progress_pct = (badges_completed / 19) * 100
             
             # Color coding
             if progress_pct < 25:
@@ -230,7 +230,7 @@ try:
             else:
                 color = "#34A853"  # Green
             
-            st.markdown(f"<span style='color: {color}; font-weight: bold;'>{badges_completed}/20 Badges</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color: {color}; font-weight: bold;'>{badges_completed}/19 Badges</span>", unsafe_allow_html=True)
             st.progress(progress_pct / 100)
         
         with col4:
@@ -279,4 +279,4 @@ except Exception as e:
 
 # Footer
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #5F6368;'>Made with ❤️ by GDGC | Powered by Google Cloud Study Jams</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #5F6368;'>Made with ❤️ by GDGC MCET | Powered by Google Cloud Study Jams</p>", unsafe_allow_html=True)
