@@ -69,7 +69,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('progress7.csv')
+    df = pd.read_csv('progress8.csv')
     return df
 
 try:
@@ -206,7 +206,7 @@ try:
         filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "No"]
     # Sort by badges completed and arcade games
     filtered_df = filtered_df.sort_values(
-        by=['# of Skill Badges Completed', '# of Arcade Games Completed',"User Name"],
+        by=['# of Skill Badges Completed', '# of Arcade Games Completed'],
         ascending=False
     ).reset_index(drop=True)
     
