@@ -141,7 +141,9 @@ try:
             st.metric("Name", second['User Name'])
             st.metric("Badges", f"{second['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{second['# of Arcade Games Completed']}/2")
-        
+            if second['All Skill Badges & Games Completed'] == "Yes":
+                color = "#34A853"
+                st.markdown(f"<span style='color: {color}; font-weight: bold;'>Completed Study Jams 🎉</span>", unsafe_allow_html=True)
         # 1st Place (Center)
         with pod_col2:
             st.markdown("### 🥇 1st Place")
@@ -149,6 +151,9 @@ try:
             st.metric("Name", first['User Name'])
             st.metric("Badges", f"{first['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{first['# of Arcade Games Completed']}/2")
+            if first['All Skill Badges & Games Completed'] == "Yes":
+                color = "#34A853"
+                st.markdown(f"<span style='color: {color}; font-weight: bold;'>Completed Study Jams 🎉</span>", unsafe_allow_html=True)
         
         # 3rd Place (Right)
         with pod_col3:
@@ -158,6 +163,9 @@ try:
             st.metric("Name", third['User Name'])
             st.metric("Badges", f"{third['# of Skill Badges Completed']}/19")
             st.metric("Games", f"{third['# of Arcade Games Completed']}/2")
+            if third['All Skill Badges & Games Completed'] == "Yes":
+                color = "#34A853"
+                st.markdown(f"<span style='color: {color}; font-weight: bold;'>Completed Study Jams 🎉</span>", unsafe_allow_html=True)
     
     st.markdown("---")
     
@@ -187,7 +195,7 @@ try:
         filtered_df = filtered_df[filtered_df['User Name'].str.contains(search_name, case=False, na=False)]
     
     if completion_filter == "Completed All Badges":
-        filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] == 19]
+        filtered_df = filtered_df[filtered_df['All Skill Badges & Games Completed'] == "Yes"]
     elif completion_filter == "In Progress":
         filtered_df = filtered_df[filtered_df['# of Skill Badges Completed'] < 19]
     if redemption == "none":
@@ -198,7 +206,7 @@ try:
         filtered_df = filtered_df[filtered_df['Access Code Redemption Status'] == "No"]
     # Sort by badges completed and arcade games
     filtered_df = filtered_df.sort_values(
-        by=['# of Skill Badges Completed', '# of Arcade Games Completed'],
+        by=['# of Skill Badges Completed', '# of Arcade Games Completed',"User Name"],
         ascending=False
     ).reset_index(drop=True)
     
@@ -217,6 +225,9 @@ try:
         
         with col2:
             st.markdown(f"**{row['User Name']}**")
+            if row['All Skill Badges & Games Completed'] == "Yes":
+                color = "#34A853"
+                st.markdown(f"<span style='color: {color}; font-weight: bold;'>Completed Study Jams 🎉</span>", unsafe_allow_html=True)
         
         with col3:
             badges_completed = row['# of Skill Badges Completed']
