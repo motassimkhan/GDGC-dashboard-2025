@@ -69,7 +69,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('progress10.csv')
+    df = pd.read_csv('progress11.csv')
     return df
 
 try:
