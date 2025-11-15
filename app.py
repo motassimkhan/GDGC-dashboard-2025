@@ -69,7 +69,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('progress13.csv')
+    df = pd.read_csv('progress14.csv')
     return df
 
 try:
@@ -81,21 +81,19 @@ try:
     # Statistics section at the top
     st.markdown("## 📈 Study Jam Statistics")
     
-    total_participants = len(df)
+    Completed_arcade = len(df[df["# of Arcade Games Completed"] > 0])
     completed_all = len(df[df['All Skill Badges & Games Completed'] == "Yes"])
-    avg_badges = df['# of Skill Badges Completed'].mean()
+    avg_badges = len(df[df['# of Skill Badges Completed']==19])
     credits_redeemed = (df["Access Code Redemption Status"]=="Yes").sum()
     
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("Total Participants", total_participants)
-    
+        st.metric("Completed Game & All Badges ", completed_all)    
     with col2:
-        st.metric("Completed Game & All Badges ", completed_all)
-    
+        st.metric("Completed Arcade Game", Completed_arcade)
     with col3:
-        st.metric("Average Badges Completed", f"{avg_badges:.1f}")
+        st.metric("Skill Badges Completed", f"{avg_badges}")
     with col4:
         st.metric("Number of People Redeemed Credits", f"{credits_redeemed}/197")
     
